@@ -1,6 +1,7 @@
 import { FormEvent, useContext, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import { AuthContext } from "../context/useAuth";
+import { withSSRGuest } from "../utils/withSSRGuest";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -22,13 +23,13 @@ export default function Home() {
     <div className={styles.container}>
       <form className={styles.main} onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           placeholder="senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -38,3 +39,9 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {},
+  };
+});
